@@ -5,5 +5,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item *ngFor = "let item of history">
+      <ion-label slot="start">{{item.name}}</ion-label>
+      <ion-note>Started {{item.start | date:'yy/MM/dd h:mm:ss'}}</ion-note>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

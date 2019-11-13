@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import{ Task} from '../models/task.interface';
+import { DataSaverServiceService } from '../data-saver-service.service'
 
 @Component({
   selector: 'app-history',
@@ -6,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history.page.scss'],
 })
 export class HistoryPage implements OnInit {
+//receive the array task 
+history:Array<Task>=[];
+historySub:Subscription;
 
-  constructor() { }
+  constructor(
+    private dataService:DataSaverServiceService,
+  ) { }
 
   ngOnInit() {
+    this.historySub=this.dataService.list$.subscribe( taskData => this.history = taskData);
   }
 
 }

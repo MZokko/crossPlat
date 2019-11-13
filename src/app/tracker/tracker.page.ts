@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import{ Validators , FormBuilder, FormGroup } from '@angular/forms';
 import {timer, Subscription} from 'rxjs';
 
+
+import { DataSaverServiceService } from '../data-saver-service.service'
+import { Task } from '../models/task.interface';
+
 @Component({
   selector: 'app-tracker',
   templateUrl: './tracker.page.html',
@@ -18,7 +22,9 @@ export class TrackerPage implements OnInit {
 
   //dependency injection = add the dependency as a part of the class
   constructor(
-    private formBuilder : FormBuilder
+    private formBuilder : FormBuilder,
+    //adding the data service
+    private dataService :DataSaverServiceService
   ) { }
 
   ngOnInit() //is executed after the constroctor 
@@ -46,6 +52,18 @@ export class TrackerPage implements OnInit {
     this.started = false;
     this.stopTime = new Date().getTime();
     this.timerSub.unsubscribe();//will stop the timer
+    //save the task
+    this.save();
     console.log(this.stopTime);
+  }
+
+  save()
+  {
+    let task:Task = {
+      name: this.taskForm.get('name').value,
+      start: this.startTime,
+      stop:this.stopTime
+    }
+    this.dataService.addToList( task );// add the task to the array
   }
 }
