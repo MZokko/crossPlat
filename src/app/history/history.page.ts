@@ -22,4 +22,15 @@ historySub:Subscription;
     this.historySub=this.dataService.list$.subscribe( taskData => this.history = taskData);
   }
 
+  duration(stop,start)
+  {
+    return ((stop-start)/1000);
+  }
+
+  delete(itemStart)
+  {
+    this.dataService.deletFromList(itemStart);
+    console.log(itemStart)
+  }
+
 }
